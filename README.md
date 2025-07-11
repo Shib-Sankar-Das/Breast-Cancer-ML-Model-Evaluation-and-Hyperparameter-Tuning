@@ -260,6 +260,85 @@ The project is optimized for efficiency:
 - **For lower memory usage**: Train models individually rather than all at once  
 - **For quicker results**: Use RandomizedSearchCV with fewer iterations
 
+## 🚀 Streamlit Cloud Deployment
+
+### Deployment Issues Fixed
+
+The initial deployment failures were due to:
+1. **PyArrow build failure** - Missing cmake dependency
+2. **Pandas compilation errors** - Python 3.13 compatibility issues
+
+### Solution Applied
+
+**Updated requirements.txt** with compatible versions:
+```
+streamlit==1.29.0
+pandas==2.1.4
+numpy==1.24.4
+scikit-learn==1.3.2
+plotly==5.17.0
+cloudpickle==3.0.0
+joblib==1.3.2
+```
+
+### Alternative Deployment Options
+
+If you still encounter issues, try these alternatives:
+
+1. **Minimal Requirements** (use `requirements_minimal.txt`):
+```
+streamlit
+pandas
+numpy
+scikit-learn
+plotly
+cloudpickle
+```
+
+2. **Backup Requirements** (use `requirements_backup.txt`):
+```
+streamlit>=1.28.0
+pandas>=2.0.0
+numpy>=1.21.0
+scikit-learn>=1.2.0
+plotly>=5.0.0
+cloudpickle>=2.0.0
+setuptools>=60.0.0
+wheel>=0.37.0
+```
+
+### Deployment Steps
+
+1. **Push to GitHub** with the updated `requirements.txt`
+2. **Connect to Streamlit Cloud** at https://share.streamlit.io/
+3. **Select your repository** and branch
+4. **Set main file** as `streamlit_app.py`
+5. **Deploy** - should work without compilation errors
+
+### Local Testing
+
+Before deploying, test locally:
+```bash
+python test_imports.py  # Test all imports
+streamlit run streamlit_app.py  # Test locally
+```
+
+## 🔧 Troubleshooting
+
+### Common Issues and Solutions
+
+1. **Import Errors**: Use the test script to verify all packages work
+2. **Model Loading Errors**: Ensure all `.pkl` files are in the `models/` directory
+3. **Data Loading Errors**: Check that `Data/breast-cancer.csv` exists
+4. **Memory Issues**: Use the minimal requirements for resource-constrained deployments
+
+### Configuration
+
+The project includes a `.streamlit/config.toml` file for optimal deployment:
+- Legacy DataFrame serialization for compatibility
+- Optimized server settings for cloud deployment
+- Custom theme matching the dashboard design
+
 ## 📄 License
 
 This project is for educational and research purposes. The breast cancer dataset is publicly available and widely used in machine learning research.
